@@ -1,0 +1,117 @@
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background-color: var(--accent);
+}
+
+.tabbed {
+  --width: 700px;
+  --accent: #4ec6de;
+
+  width: var(--width);
+  margin: 50px auto;
+  font-family: "PT Sans", system-ui, sans-serif;
+}
+
+/* flex tab header row */
+.tab-list {
+  display: flex;
+  gap: 5px;
+}
+
+.tab-list > a {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  user-select: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tab-list > a:hover {
+  background: var(--accent);
+}
+
+.tab-list > a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* active tab styling */
+.tab-list > a:target,
+.tabbed:has(#html:target) a[href="#html"],
+.tabbed:has(#css:target) a[href="#css"],
+.tabbed:has(#js:target) a[href="#js"],
+.tabbed:has(#output:target) a[href="#output"] {
+  background: var(--accent);
+}
+
+/* default: highlight first tab when no target */
+.tab-list > a[href="#html"]:not(.tabbed:has(:target) *) {
+  background: var(--accent);
+}
+
+.tabs {
+  position: relative;
+  perspective: 600px;
+  margin-top: 0;
+}
+
+/* panels */
+.panel {
+  width: var(--width);
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  border: 2px solid var(--accent);
+  padding: 10px 30px 40px;
+  line-height: 1.4;
+
+  opacity: 0;
+  transform: rotateX(-20deg);
+  transform-origin: top center;
+  transition: opacity 0.3s, transform 1s;
+  z-index: 0;
+}
+
+/* show targeted panel */
+.panel:target {
+  opacity: 1;
+  transform: rotateX(0);
+  z-index: 1;
+}
+
+/* show first by default, hide when other targeted */
+.tabs:not(:has(:target)) > .panel:first-child {
+  opacity: 1;
+  transform: rotateX(0);
+  z-index: 1;
+}
+
+/* responsive */
+@media (max-width: 700px) {
+  .tabbed {
+    --width: 400px;
+  }
+
+  .tab-list {
+    display: none;
+  }
+
+  .panel {
+    position: relative;
+    border: none;
+    padding: 0;
+    opacity: 1;
+    transform: none;
+    margin-bottom: 60px;
+  }
+
+  .panel h2 {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5em;
+  }
+}
