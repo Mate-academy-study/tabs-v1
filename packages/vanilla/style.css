@@ -49,7 +49,7 @@
 }
 
 /* default: highlight first tab when no target */
-.tab-list > a[href="#html"]:not(.tabbed:has(:target) *) {
+.tab-list > a:first-child:not(.tabbed:has(:target) *) {
   background: var(--accent);
 }
 
